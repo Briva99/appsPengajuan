@@ -16,6 +16,7 @@ const Register = ({navigation}) => {
 
   const onContinue = () => {
     console.log(form);
+    // test data
     // const data = {
     //   fullName: form.fullName,
     //   email: form.email,
@@ -57,43 +58,6 @@ const Register = ({navigation}) => {
           color: colors.white,
         });
       });
-
-    // // const data = {
-    //   fullName: form.fullName,
-    //   profession: form.profession,
-    //   email: form.email,
-    // };
-    // navigation.navigate('UploadPhoto', data);
-    // setLoading(true);
-    // Fire.auth()
-    //   .createUserWithEmailAndPassword(form.email, form.password)
-    //   .then(success => {
-    //     setLoading(false);
-    //     setForm('reset');
-    //     const data = {
-    //       fullName: form.fullName,
-    //       email: form.email,
-    //       uid: success.user.uid,
-    //     };
-
-    //     Fire.database()
-    //       .ref('users/' + success.user.uid + '/')
-    //       .set(data);
-
-    //     // storeData('user', data);
-    //     navigation.navigate('UploadPhoto', data);
-    //     console.log('register success : ', success);
-    //   })
-    //   .catch(error => {
-    //     const errorMessage = error.message;
-    //     setLoading(false);
-    //     showMessage({
-    //       message: errorMessage,
-    //       type: 'default',
-    //       backgroundColor: colors.error,
-    //       color: colors.white,
-    //     });
-    //   });
   };
 
   return (

@@ -65,7 +65,11 @@ const UploadKtp = ({navigation, route}) => {
           <Text>Silahkan Upload KTP anda</Text>
         </View>
         <View>
-          <Button disable={!hasPhoto} title="Upload Photo" onPress={Upload} />
+          {/* <Button disable={!hasPhoto} title="Upload Photo KTP" onPress={Upload} /> */}
+          <Button
+            title="Upload Photo KTP"
+            onPress={() => navigation.navigate('FotoSelfie')}
+          />
         </View>
       </View>
     </View>

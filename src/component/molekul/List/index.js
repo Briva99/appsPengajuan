@@ -7,6 +7,7 @@ import {
   IconGaji,
   IconNext,
   IconReport,
+  IconSignal,
   IconSignOut,
   IconUang,
   IconUang1,
@@ -30,6 +31,9 @@ const List = ({Profile, name, desc, type, onPress, icon}) => {
     if (icon === 'signOut') {
       return <IconSignOut style={styles.avatar} />;
     }
+    if (icon === 'signal') {
+      return <IconSignal style={styles.avatar} />;
+    }
   };
   return (
     <TouchableOpacity style={styles.container} onPress={onPress}>
@@ -50,6 +54,11 @@ const styles = StyleSheet.create({
     width: 46,
     height: 46,
     borderRadius: 46 / 2,
+  },
+  avatar1: {
+    width: 10,
+    height: 10,
+    // borderRadius: 46 / 2,
   },
   next: {
     width: 30,

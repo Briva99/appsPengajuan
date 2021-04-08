@@ -8,9 +8,13 @@ import Report from './Report';
 import Splash from './Splash';
 import UpdateProfile from './UpdateProfile';
 import Simulasi from './Simulasi';
+import Signal from './Signal';
+import FotoSelfie from './FotoSelfie';
 
 export {
   UpdateProfile,
+  FotoSelfie,
+  Signal,
   Simulasi,
   Login,
   Register,

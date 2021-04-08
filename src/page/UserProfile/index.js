@@ -57,6 +57,12 @@ const UserProfile = ({navigation}) => {
         onPress={() => navigation.navigate('UpdateProfile')}
       />
       <List
+        desc="Mode"
+        type="next"
+        icon="signal"
+        onPress={() => navigation.navigate('Signal')}
+      />
+      <List
         name="Sign Out"
         desc="Sign Out"
         type="next"

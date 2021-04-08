@@ -3,7 +3,7 @@ import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import {Button, Gap, Header, Input} from '../../component';
 import {useForm} from '../../utility';
 
-const Simulasi = ({navigation}) => {
+const Simulasi = ({navigation, hasil}) => {
   const [form, setForm] = useForm({
     pengajuan: '',
     jangkaWaktu: '- Select Jangka Waktu -',
@@ -12,13 +12,13 @@ const Simulasi = ({navigation}) => {
   });
   const [jangkaWaktu] = useState([
     {id: 1, label: '- Select Jangka Waktu -', value: 'Jangka Waktu'},
-    {id: 2, label: ' 1 tahun', value: '1 tahun'},
-    {id: 3, label: ' 2 tahun', value: '2 tahun'},
+    {id: 2, label: ' 1 tahun', value: 12},
+    {id: 3, label: ' 2 tahun', value: 24},
   ]);
   const [sukuBunga] = useState([
     {id: 1, label: '- Select Suku Bunga -', value: 'Suku Bunga'},
-    {id: 2, label: ' 1 % ', value: '1 %'},
-    {id: 3, label: ' 1.5 % ', value: '1.5 %'},
+    {id: 2, label: ' 1 % ', value: 1 / 100},
+    {id: 3, label: ' 1.5 % ', value: 1.5 / 100},
   ]);
   const hitung = () => {
     console.log(form);
@@ -26,9 +26,10 @@ const Simulasi = ({navigation}) => {
       pengajuan: form.pengajuan,
       jangkaWaktu: form.jangkaWaktu,
       sukuBunga: form.sukuBunga,
+      hasil: (form.pengajuan * form.sukuBunga) / form.jangkaWaktu,
     };
     console.log('data :', data);
-    const hasil = (form.pengajuan * form.sukuBunga) / form.jangkaWaktu;
+    hasil = (form.pengajuan * form.sukuBunga) / form.jangkaWaktu;
     console.log(hasil);
   };
   //   const reset =()=>{
@@ -55,7 +56,7 @@ const Simulasi = ({navigation}) => {
             label="Jangka Waktu"
             keyboardType="numeric"
             value={form.jangkaWaktu}
-            onChangeText={value => setForm('jangkaWaktu', value)}
+            onValueChange={value => setForm('jangkaWaktu', value)}
             select
             selectItem={jangkaWaktu}
           />
@@ -64,7 +65,7 @@ const Simulasi = ({navigation}) => {
             label="Suku Bunga p.a"
             keyboardType="numeric"
             value={form.sukuBunga}
-            onChangeText={value => setForm('sukuBunga', value)}
+            onValueChange={value => setForm('sukuBunga', value)}
             select
             selectItem={sukuBunga}
           />
@@ -75,7 +76,7 @@ const Simulasi = ({navigation}) => {
             value={form.hasil}
             // onChangeText={value => setForm('sukuBunga', value)}
           />
-          <Text>Hasil :</Text>
+          <Text>Hasil : {hasil}</Text>
           {/* <Text>{hasil}</Text> */}
           <Gap height={40} />
           <Button title="Hitung" onPress={hitung} />

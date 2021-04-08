@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {StyleSheet, Text, TextInput, View} from 'react-native';
 import {colors, fonts} from '../../../utility';
+import {Picker} from '@react-native-community/picker';
 
 const Input = ({
   label,
@@ -10,6 +11,9 @@ const Input = ({
   secureTextEntry,
   isTextArea,
   disable,
+  onValueChange,
+  selectItem,
+  select,
 }) => {
   const [border, setBorder] = useState(colors.border);
   const onFocusForm = () => {
@@ -18,6 +22,27 @@ const Input = ({
   const onBlurForm = () => {
     setBorder(colors.border);
   };
+  if (select) {
+    return (
+      <View>
+        <Text style={styles.label}>{label}</Text>
+        <View style={styles.picker}>
+          <Picker selectedValue={value} onValueChange={onValueChange}>
+            {selectItem.map(item => {
+              return (
+                <Picker.Item
+                  key={item.id}
+                  label={item.label}
+                  value={item.value}
+                />
+              );
+            })}
+          </Picker>
+        </View>
+      </View>
+    );
+  }
+
   if (isTextArea) {
     return (
       <View>
@@ -78,5 +103,11 @@ const styles = StyleSheet.create({
     color: colors.text.secondary,
     marginBottom: 6,
     fontFamily: fonts.primary[400],
+  },
+  picker: {
+    borderWidth: 1,
+    borderColor: colors.border,
+    borderRadius: 10,
+    paddingHorizontal: 4,
   },
 });

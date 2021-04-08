@@ -1,11 +1,13 @@
 import {createStackNavigator} from '@react-navigation/stack';
 import React from 'react';
 import {
+  FotoSelfie,
   Login,
   MainApp,
   Pengajuan,
   Register,
   Report,
+  Signal,
   Simulasi,
   Splash,
   UpdateProfile,
@@ -18,7 +20,7 @@ const Stack = createStackNavigator();
 
 const Router = () => {
   return (
-    <Stack.Navigator initialRouteName="Splash">
+    <Stack.Navigator initialRouteName="MainApp">
       <Stack.Screen
         name="Login"
         component={Login}
@@ -72,6 +74,16 @@ const Router = () => {
       <Stack.Screen
         name="UploadKtp"
         component={UploadKtp}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Signal"
+        component={Signal}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="FotoSelfie"
+        component={FotoSelfie}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

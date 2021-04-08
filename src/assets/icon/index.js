@@ -10,10 +10,14 @@ import IconReport from './IconReport.svg';
 import IconLogo from './Logo.svg';
 import IconEditProfile from './ic-edit-profile.svg';
 import IconSignOut from './IconSignOut.svg';
+import IconSignal from './IconSignalWifi.svg';
+import IconSelfie from './IconSelfie.svg';
 
 export {
   IconBuy,
+  IconSelfie,
   IconSignOut,
+  IconSignal,
   IconEditProfile,
   IconLogo,
   IconReport,

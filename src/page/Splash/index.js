@@ -6,18 +6,20 @@ import {colors, fonts} from '../../utility';
 
 const Splash = ({navigation}) => {
   useEffect(() => {
-    setTimeout(() => {
-      Fire.auth().onAuthStateChanged(user => {
-        if (user) {
+    const unsubscribe = Fire.auth().onAuthStateChanged(users => {
+      setTimeout(() => {
+        if (users) {
           //user masih login
-          console.log('user :', user);
+
           navigation.replace('MainApp');
         } else {
           //user logout
           navigation.replace('Login');
         }
-      });
-    }, 3000);
+      }, 3000);
+    });
+
+    return () => unsubscribe();
   }, [navigation]);
   return (
     <View style={styles.wrepper}>

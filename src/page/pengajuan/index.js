@@ -1,15 +1,48 @@
-import React, {useState} from 'react';
-import {ScrollView, StyleSheet, Text, View} from 'react-native';
+import React from 'react';
+import {Alert, ScrollView, StyleSheet, View} from 'react-native';
 import {Button, Gap, Header, Input} from '../../component';
-import {colors, fonts} from '../../utility';
+import Fire from '../../config';
+import {colors, fonts, useForm} from '../../utility';
 
-const Pengajuan = ({navigation}) => {
-  const [form, setForm] = useState({
+const Pengajuan = ({navigation, fullName}) => {
+  const [form, setForm] = useForm({
     fullName: '',
     address: '',
     phone: '',
     credit: '',
+    id: '',
   });
+
+  const onContinue = () => {
+    console.log(form);
+    if (form.fullName && form.address && form.phone && form.credit) {
+      const tambahCredit = Fire.database().ref('Register_Pengajuan');
+      const registerPengajuan = {
+        fullName: form.fullName,
+      };
+
+      tambahCredit.push(registerPengajuan).then(success => {
+        // showSuccess('Registrasi berhasil');
+
+        console.log('Registrasi berhasil :', success);
+        const data = {
+          fullName: form.fullName,
+          address: form.address,
+          phone: form.phone,
+          credit: form.credit,
+          uid: success.path.pieces_[1],
+        };
+        Fire.database()
+          .ref('Register_Pengajuan/' + success.path.pieces_[1] + '/')
+          .set(data);
+        setForm('reset');
+        navigation.navigate('UploadKtp', data);
+        console.log('data :', data);
+      });
+    } else {
+      Alert.alert('Error:', 'Data Harus Diisi Dengan Lengkap');
+    }
+  };
 
   return (
     <View style={styles.pages}>
@@ -48,10 +81,7 @@ const Pengajuan = ({navigation}) => {
             onChangeText={value => setForm('credit', value)}
           />
           <Gap height={50} />
-          <Button
-            title="Submit"
-            onPress={() => navigation.navigate('UploadKtp')}
-          />
+          <Button title="Submit" onPress={onContinue} />
           <Gap height={30} />
         </View>
       </ScrollView>

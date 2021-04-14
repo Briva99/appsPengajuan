@@ -76,7 +76,7 @@ const Simulasi = ({navigation, hasil}) => {
             value={form.hasil}
             // onChangeText={value => setForm('sukuBunga', value)}
           />
-          <Text>Hasil : {hasil}</Text>
+          <Text>`Hasil : ${hasil}`</Text>
           {/* <Text>{hasil}</Text> */}
           <Gap height={40} />
           <Button title="Hitung" onPress={hitung} />

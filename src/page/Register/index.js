@@ -2,8 +2,14 @@ import React, {useState} from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {Button, Gap, Input, Loading} from '../../component';
 import Fire from '../../config';
-import {colors, getData, storeData, useForm} from '../../utility';
-import {showMessage} from 'react-native-flash-message';
+import {
+  colors,
+  getData,
+  showError,
+  showSuccess,
+  storeData,
+  useForm,
+} from '../../utility';
 
 const Register = ({navigation}) => {
   const [form, setForm] = useForm({
@@ -28,12 +34,7 @@ const Register = ({navigation}) => {
       .createUserWithEmailAndPassword(form.email, form.password)
       .then(success => {
         setLoading(false);
-        showMessage({
-          message: 'Register Berhasil',
-          type: 'default',
-          backgroundColor: colors.success,
-          color: colors.white,
-        });
+        showSuccess('Registrasi Berhasil');
         setForm('reset');
         const data = {
           fullName: form.fullName,
@@ -49,14 +50,8 @@ const Register = ({navigation}) => {
         console.log('register sukses :', success);
       })
       .catch(error => {
-        const errorMessage = error.message;
         setLoading(false);
-        showMessage({
-          message: errorMessage,
-          type: 'default',
-          backgroundColor: colors.error,
-          color: colors.white,
-        });
+        showError(error.message);
       });
   };
 

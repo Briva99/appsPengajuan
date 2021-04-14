@@ -1,10 +1,10 @@
-import React, {useState, useEffect} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {StyleSheet, View} from 'react-native';
 import {showMessage} from 'react-native-flash-message';
 import {ILNullPhoto} from '../../assets';
-import {Gap, Header, Profile, List} from '../../component';
+import {Gap, Header, List, Profile} from '../../component';
 import Fire from '../../config';
-import {colors, getData} from '../../utility';
+import {colors, getData, showSuccess} from '../../utility';
 
 const UserProfile = ({navigation}) => {
   const [profile, setProfile] = useState({
@@ -24,7 +24,7 @@ const UserProfile = ({navigation}) => {
     Fire.auth()
       .signOut()
       .then(() => {
-        console.log('success sign Out ');
+        showSuccess('Log Out Berhasil');
         navigation.replace('Login');
       })
       .catch(err => {

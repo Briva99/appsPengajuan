@@ -1,24 +1,56 @@
-import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
-import {Header} from '../../component';
-import {colors} from '../../utility';
+import React, {useEffect, useState} from 'react';
+import {ScrollView, StyleSheet, Text, View} from 'react-native';
+import {Gap, Header, ReportItem} from '../../component';
+import Fire from '../../config';
+import {colors, showError, getData} from '../../utility';
 
-const Report = ({navigation}) => {
+const Report = ({navigation, uid}) => {
+  const [reports, setReports] = useState([]);
+  useEffect(() => {
+    getReport();
+  }, []);
+
+  const getReport = () => {
+    Fire.database()
+      .ref('Register_Pengajuan/')
+      .once('value')
+      .then(res => {
+        console.log('reportss :', res.val());
+        if (res.val()) {
+          const oldData = res.val();
+          const data = [];
+          Object.keys(oldData).map(key => {
+            data.push({
+              id: key,
+              data: oldData[key],
+            });
+          });
+          console.log('data hasil :', data);
+          setReports(data);
+        }
+      })
+      .catch(err => {
+        showError(err.message);
+      });
+  };
+
   return (
     <View style={styles.pages}>
       <Header title="Status Pengajuan" onPress={() => navigation.goBack()} />
-      <View style={styles.wripper}>
-        <Text style={styles.Text}>Nama :</Text>
-        <Text style={styles.Text}>Jors Buss</Text>
-      </View>
-      <View style={styles.wripper}>
-        <Text style={styles.Text}>Alamat :</Text>
-        <Text style={styles.Text}>jalan simanjuntak belakang</Text>
-      </View>
-      <View style={styles.wripper}>
-        <Text style={styles.Text}>Keterangan :</Text>
-        <Text style={styles.Text}>tidak di ACC</Text>
-      </View>
+      <ScrollView style={styles.wripper} showsVerticalScrollIndicator={false}>
+        <Gap height={17} />
+        {reports.map(report => {
+          return (
+            <ReportItem
+              key={report.id}
+              fullName={report.data.fullName}
+              address={report.data.address}
+              Credit={report.data.credit}
+              image={{uri: report.data.photoSelfi}}
+            />
+          );
+        })}
+      </ScrollView>
     </View>
   );
 };
@@ -30,16 +62,9 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
     flex: 1,
   },
-  Text: {
-    marginVertical: 5,
-    marginLeft: 20,
-    fontSize: 14,
-    justifyContent: 'center',
-  },
   wripper: {
-    flexDirection: 'row',
-    backgroundColor: 'yellow',
-    marginRight: 20,
-    marginLeft: 20,
+    // flexDirection: 'row',
+    // backgroundColor: 'yellow',
+    marginHorizontal: 20,
   },
 });

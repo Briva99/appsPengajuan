@@ -50,14 +50,14 @@ const Input = ({
         <TextInput
           multiline={true}
           numberOfLines={4}
-          style={styles.input(border)}
+          // style={styles.input(border)}
           onFocus={onFocusForm}
           onBlur={onBlurForm}
           value={value}
           onChangeText={onChangeText}
           keyboardType={keyboardType}
-          secureTextEntry={secureTextEntry}
-          // style={styles.txtInputArea}
+          // secureTextEntry={secureTextEntry}
+          style={styles.txtInputArea(border)}
         />
       </View>
     );
@@ -90,14 +90,14 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 12,
   }),
-  txtInputArea: {
+  txtInputArea: border => ({
     textAlignVertical: 'top',
     borderWidth: 1,
     borderColor: colors.border,
     borderRadius: 10,
     padding: 12,
     color: 'black',
-  },
+  }),
   label: {
     fontSize: 16,
     color: colors.text.secondary,

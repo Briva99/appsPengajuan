@@ -12,6 +12,7 @@ const mainColors = {
   blue1: '#0066CB',
   black1: '#000000',
   black2: 'rgba(0, 0, 0, 0.5)',
+  black3: '#4e4e4e',
   red1: '#E06379',
 };
 
@@ -44,6 +45,7 @@ export const colors = {
     },
   },
   border: mainColors.grey2,
+  borderCard: mainColors.black3,
   cardLight: mainColors.green2,
   loadingBackground: mainColors.black2,
   error: mainColors.red1,

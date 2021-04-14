@@ -2,20 +2,60 @@ import React, {useState} from 'react';
 import {StyleSheet, Text, View, TouchableOpacity, Image} from 'react-native';
 import {IconAddPhoto, IconRemovePhoto, ILNullPhoto} from '../../assets';
 import {Button, Gap, Header} from '../../component';
-import {colors, fonts} from '../../utility';
+import {colors, fonts, showSuccess, storeData} from '../../utility';
+import {showMessage} from 'react-native-flash-message';
+import {launchImageLibrary} from 'react-native-image-picker';
+import Fire from '../../config';
 
 const FotoSelfie = ({navigation, route}) => {
-  // const { uid} = route.params;
+  const {uid} = route.params;
   const [hasPhoto, setHasPhoto] = useState(false);
-  const [photoForDB, setPhotoForDB] = useState('');
+  const [photoSelfForDB, setPhotoSelfForDB] = useState('');
   const [photo, setPhoto] = useState(ILNullPhoto);
+
+  const getImage = () => {
+    launchImageLibrary(
+      {quality: 1, maxWidth: 400, maxHeight: 400, includeBase64: true},
+      response => {
+        // Same code as in above section!
+        console.log('hasil response :', response);
+        if (response.didCancel || response.error) {
+          showMessage({
+            message: 'Foto Gagal Upload',
+            type: 'default',
+            backgroundColor: colors.error,
+            color: colors.white,
+          });
+        } else {
+          console.log('response getImage :', response);
+          const source = {uri: response.uri};
+          setPhotoSelfForDB(`data:${response.type};base64, ${response.base64}`);
+
+          setPhoto(source);
+          setHasPhoto(true);
+        }
+      },
+    );
+  };
+
+  const Upload = () => {
+    Fire.database()
+      .ref('Register_Pengajuan/' + uid + '/')
+      .update({photoSelfi: photoSelfForDB});
+    showSuccess('Registrasi Pengajuan Berhasil');
+    const data = route.params;
+    data.photo = photoSelfForDB;
+    storeData('Register', data);
+    navigation.replace('MainApp');
+  };
+
   return (
     <View style={styles.page}>
       <Header title="Foto Selfie" onPress={() => navigation.goBack()} />
 
       <View style={styles.content}>
         <View style={styles.profile}>
-          <TouchableOpacity style={styles.avatarWrapper}>
+          <TouchableOpacity style={styles.avatarWrapper} onPress={getImage}>
             {hasPhoto && <Image source={photo} style={styles.avatar} />}
             {!hasPhoto && <Image source={photo} style={styles.avatar1} />}
 
@@ -26,7 +66,11 @@ const FotoSelfie = ({navigation, route}) => {
         </View>
 
         <View style={styles.button}>
-          <Button disable={!hasPhoto} title="Upload Photo Selfie" />
+          <Button
+            disable={!hasPhoto}
+            title="Upload Photo Selfie"
+            onPress={Upload}
+          />
         </View>
       </View>
     </View>

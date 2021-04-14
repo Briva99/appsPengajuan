@@ -8,7 +8,7 @@ import {showMessage} from 'react-native-flash-message';
 import Fire from '../../config';
 
 const UploadKtp = ({navigation, route}) => {
-  // const {uid} = route.params;
+  const {uid} = route.params;
 
   const [hasPhoto, setHasPhoto] = useState(false);
   const [photoForDB, setPhotoForDB] = useState('');
@@ -31,9 +31,7 @@ const UploadKtp = ({navigation, route}) => {
           console.log('response getImage :', response);
           const source = {uri: response.uri};
           setPhotoForDB(`data:${response.type};base64, ${response.base64}`);
-          // setPhotoForDB({
-          //   uri: 'data:' + response.type + 'base64,' + response.data,
-          // });
+
           setPhoto(source);
           setHasPhoto(true);
         }
@@ -42,12 +40,12 @@ const UploadKtp = ({navigation, route}) => {
   };
   const Upload = () => {
     Fire.database()
-      // .ref('users/' + uid + '/')
-      .update({photo: photoForDB});
+      .ref('Register_Pengajuan/' + uid + '/')
+      .update({photoKTP: photoForDB});
     const data = route.params;
     data.photo = photoForDB;
-    storeData('user', data);
-    navigation.navigate('MainApp');
+    storeData('Register', data);
+    navigation.navigate('FotoSelfie', data);
   };
   return (
     <View style={styles.page}>
@@ -66,10 +64,7 @@ const UploadKtp = ({navigation, route}) => {
         </View>
         <View>
           {/* <Button disable={!hasPhoto} title="Upload Photo KTP" onPress={Upload} /> */}
-          <Button
-            title="Upload Photo KTP"
-            onPress={() => navigation.navigate('FotoSelfie')}
-          />
+          <Button title="Upload Photo KTP" onPress={Upload} />
         </View>
       </View>
     </View>

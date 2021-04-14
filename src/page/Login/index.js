@@ -4,7 +4,7 @@ import {showMessage} from 'react-native-flash-message';
 import {IconLogo} from '../../assets';
 import {Button, Gap, Input, Loading} from '../../component';
 import Fire from '../../config';
-import {colors, storeData, useForm} from '../../utility';
+import {colors, showError, storeData, useForm} from '../../utility';
 
 const Login = ({navigation}) => {
   const [form, setForm] = useForm({email: '', password: ''});
@@ -32,12 +32,7 @@ const Login = ({navigation}) => {
       .catch(err => {
         console.log('error', err);
         setLoading(false);
-        showMessage({
-          message: err.message,
-          type: 'default',
-          backgroundColor: colors.error,
-          color: colors.white,
-        });
+        showError('Email atau password yang anda masukkan salah');
       });
   };
   return (
